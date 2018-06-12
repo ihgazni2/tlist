@@ -1754,7 +1754,7 @@ def get_key(tl,value,**kwargs):
 def list2tl(arr):
     kl = elel.select_odds(arr)
     vl = elel.select_evens(arr)
-    tl = tltl.kvlists2tl(kl,vl)
+    tl = kvlists2tl(kl,vl)
     return(tl)
 ####### 
 
