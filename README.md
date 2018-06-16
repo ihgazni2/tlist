@@ -32,6 +32,10 @@
 ├──23. [remove_all](tlist/Images/Tlist.remove_all.0.png)  <br>
 ├──24. [remove_first](tlist/Images/Tlist.remove_first.0.png)  <br>
 ├──25. [remove_last](tlist/Images/Tlist.remove_last.0.png)  <br>
+├──25. [remove_which](tlist/Images/Tlist.remove_which.0.png)  <br>
 ├──26. [reverse](tlist/Images/Tlist.reverse.0.png)  <br>
 ├──27. [sort](tlist/Images/Tlist.sort.0.png)  <br>
+├──28. [uniqualize](tlist/Images/Tlist.uniqualize.0.png)  <br>
+├──29. [uniqualize_all](tlist/Images/Tlist.uniqualize_all.0.png)  <br>
+
 -----------------------------------------------------------------------
