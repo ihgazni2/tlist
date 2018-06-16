@@ -1179,6 +1179,8 @@ def _pop_seqs(tuple_list,seqs,**kwargs):
         rslt = elel.pop_indexes(tuple_list,seqs,mode='original')
     return(rslt)
 
+
+
 def _remove_first(tuple_list,**kwargs):
     '''
         tl = [('k1','v1'),('k2','v21'),('k2','v22'),('k2','v23'),('k3','v3'),('k2','v24'),('k4','v4')]
@@ -1324,6 +1326,101 @@ def _remove_last(tuple_list,**kwargs):
                 new.remove(temp)
                 break
     return(new)
+
+
+
+
+def _remove_which(tuple_list,which,**kwargs):
+    '''
+        tl = [('k1','v1'),('k2','v21'),('k2','v22'),('k2','v23'),('k3','v3'),('k2','v24'),('k4','v4')]
+        _remove_which(tl,0,key='k2')
+        tl
+        tl = [('k1','v1'),('k2','v21'),('k2','v22'),('k2','v23'),('k3','v3'),('k2','v24'),('k4','v4')]
+        _remove_which(tl,1,value='v3')
+        tl
+        tl = [('k1','v1'),('k2','v21'),('k2','v22'),('k2','v23'),('k3','v3'),('k2','v24'),('k4','v4')]
+        _remove_which(tl,0,kv=('k4','v4'))
+        tl
+        tl = [('k1','v1'),('k2','v21'),('k2','v22'),('k2','v23'),('k3','v3'),('k2','v24'),('k4','v4')]
+        _remove_which(tl,1,kv=('k1','v1'))
+        tl
+    '''
+    if('kv' in kwargs):
+        key = kwargs['kv'][0]
+        value = kwargs['kv'][1]
+        mode = 'kv'
+    elif('key' in kwargs):
+        key = kwargs['key']
+        mode = 'key'
+    elif('value' in kwargs):
+        value = kwargs['value']
+        mode = 'value'
+    else:
+        raise Exception("key or value or kv needed")
+    if('check' in kwargs):
+        check = kwargs['check']
+    else:
+        check = 1
+    if(check):
+        if(is_tlist(tuple_list)):
+            pass
+        else:
+            return(None)
+    else:
+        pass
+    if('deepcopy' in kwargs):
+        deepcopy = kwargs['deepcopy']
+    else:
+        deepcopy = 1
+    if(deepcopy):
+        new = copy.deepcopy(tuple_list)
+    else:
+        new = tuple_list
+    len = new.__len__()
+    c = 0
+    if(mode =='key'):
+        for i in range(0,tuple_list.__len__()):
+            temp = tuple_list[i]
+            k = temp[0]
+            v = temp[1]
+            if(k == key):
+                if(c == which):
+                    new.remove(temp)
+                    break
+                else:
+                    c = c + 1
+            else:
+                pass
+    elif(mode == 'value'):
+        for i in range(0,tuple_list.__len__()):
+            temp = tuple_list[i]
+            k = temp[0]
+            v = temp[1]
+            if(v == value):
+                if(c == which):
+                    new.remove(temp)
+                    break
+                else:
+                    c = c + 1
+            else:
+                pass
+    else:
+        for i in range(0,tuple_list.__len__()):
+            temp = tuple_list[i]
+            k = temp[0]
+            v = temp[1]
+            if((k==key)&(v==value)):
+                if(c == which):
+                    new.remove(temp)
+                    break
+                else:
+                    c = c + 1
+            else:
+                pass
+    return(new)
+
+
+
 
 def _remove_all(tuple_list,**kwargs):
     '''
@@ -1758,6 +1855,76 @@ def list2tl(arr):
     return(tl)
 ####### 
 
+#################
+
+def uniqualize(tl,*args,**kwargs):
+    kl,vl = tl2kvlists(tl)
+    if('mode' in kwargs):
+        mode = kwargs['mode']
+    else:
+        mode = "key"
+    if(mode == "key"):
+        key = args[0]
+    elif(mode == "value"):
+        value = args[0]
+    else:
+        key = args[0]
+        value = args[1]
+    lngth = kl.__len__()
+    nkl = []
+    nvl = []
+    for i in range(0,lngth):
+        k = kl[i]
+        v = vl[i]
+        if(mode == 'key'):
+            cond = (k == key)
+        elif(mode == "value"):
+            cond = (v == value)
+        else:
+            cond = ((k == key)&(v == value))
+        if(cond):
+            if(k in nkl):
+                pass
+            else:
+                nkl.append(k)
+                nvl.append(v)
+        else:
+            nkl.append(k)
+            nvl.append(v)
+    ntl = kvlists2tl(kl,vl)
+    return(ntl)
+
+
+def uniqualize_all(tl,**kwargs):
+    kl,vl = tl2kvlists(tl)
+    if('mode' in kwargs):
+        mode = kwargs['mode']
+    else:
+        mode = "key"
+    if(mode == "key"):
+        key = args[0]
+    elif(mode == "value"):
+        value = args[0]
+    else:
+        key = args[0]
+        value = args[1]
+    lngth = kl.__len__()
+    nkl = []
+    nvl = []
+    for i in range(0,lngth):
+        k = kl[i]
+        v = vl[i]
+        if(k in nkl):
+            pass
+        else:
+            nkl.append(k)
+            nvl.append(v)
+    ntl = kvlists2tl(kl,vl)
+    return(ntl)
+
+
+#################
+
 class Tlist():
     def __init__(self,*args,**kwargs):
         '''
@@ -2036,6 +2203,10 @@ class Tlist():
             tl
         '''
         self.tl = _remove_first(self.tl,**kwargs)
+    def remove_which(self,which,**kwargs):
+        self.tl = _remove_which(self.tl,which,**kwargs)
+    #########################
+    #########################
     def pop_seqs(self,seqs,**kwargs):
         '''
             x = [('k1','v1'),('k2','v21'),('k2','v22'),('k2','v23'),('k3','v3'),('k2','v24'),('k4','v4')]
@@ -2290,4 +2461,8 @@ class Tlist():
             kl
             vl 
         '''
-        return(tl2kvlists(self.tl,**kwargs))        
+        return(tl2kvlists(self.tl,**kwargs))       
+    def uniqualize_all(self,**kwargs):
+        self.tl = uniqualize_all(self.tl,**kwargs)
+    def uniqualize(self,*args,**kwargs):
+        self.tl = uniqualize(self.tl,**kwargs) 
