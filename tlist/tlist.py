@@ -1901,25 +1901,25 @@ def uniqualize_all(tl,**kwargs):
         mode = kwargs['mode']
     else:
         mode = "key"
-    if(mode == "key"):
-        key = args[0]
-    elif(mode == "value"):
-        value = args[0]
-    else:
-        key = args[0]
-        value = args[1]
     lngth = kl.__len__()
     nkl = []
     nvl = []
+    ntl = []
     for i in range(0,lngth):
         k = kl[i]
         v = vl[i]
-        if(k in nkl):
+        if(mode == "key"):
+            cond = (k in nkl)
+        elif(mode == "value"):
+            cond = (v in nvl)
+        else:
+            cond = ((k,v) in ntl)
+        if(cond):
             pass
         else:
             nkl.append(k)
             nvl.append(v)
-    ntl = kvlists2tl(nkl,nvl)
+            ntl.append((k,v))
     return(ntl)
 
 
@@ -2465,4 +2465,4 @@ class Tlist():
     def uniqualize_all(self,**kwargs):
         self.tl = uniqualize_all(self.tl,**kwargs)
     def uniqualize(self,*args,**kwargs):
-        self.tl = uniqualize(self.tl,**kwargs) 
+        self.tl = uniqualize(self.tl,*args,**kwargs) 
