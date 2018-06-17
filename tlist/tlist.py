@@ -1891,7 +1891,7 @@ def uniqualize(tl,*args,**kwargs):
         else:
             nkl.append(k)
             nvl.append(v)
-    ntl = kvlists2tl(kl,vl)
+    ntl = kvlists2tl(nkl,nvl)
     return(ntl)
 
 
@@ -1919,7 +1919,7 @@ def uniqualize_all(tl,**kwargs):
         else:
             nkl.append(k)
             nvl.append(v)
-    ntl = kvlists2tl(kl,vl)
+    ntl = kvlists2tl(nkl,nvl)
     return(ntl)
 
 
