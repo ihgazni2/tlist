@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
       name="tlist",
-      version = "0.4",
+      version = "0.5",
       description="handle....,APIs",
       author="dapeli",
       url="https://github.com/ihgazni2/main",
