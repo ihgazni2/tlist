@@ -1175,7 +1175,8 @@ def _pop_seqs(tuple_list,seqs,**kwargs):
     if(mode == 'index'):
         rslt = elel.pop_indexes(tuple_list,seqs,mode='original')
     else:
-        seqs = _indexes_all(tuple_list,**kwargs)
+        all_matched = _indexes_all(tuple_list,**kwargs)
+        seqs = elel.select_seqs(all_matched,seqs)
         rslt = elel.pop_indexes(tuple_list,seqs,mode='original')
     return(rslt)
 
