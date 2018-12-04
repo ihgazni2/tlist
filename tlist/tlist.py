@@ -1923,6 +1923,76 @@ def uniqualize_all(tl,**kwargs):
             ntl.append((k,v))
     return(ntl)
 
+#################
+#tele  (k1,v1)
+
+def cmp_tele(t1,t2,**kwargs):
+    def default_eq_func(value1,value2):
+        cond = (value1 == value2)
+        return(cond)
+    def default_gt_func(value1,value2):
+        cond = (value1 > value2)
+        return(cond)
+    def default_lt_func(value1,value2):
+        cond = (value1 < value2)
+        return(cond)
+    if('eq_func' in kwargs):
+        eq_func = kwargs['eq_func']
+    else:
+        eq_func = default_eq_func
+    if('gt_func' in kwargs):
+        gt_func = kwargs['gt_func']
+    else:
+        gt_func = default_gt_func
+    if('lt_func' in kwargs):
+        lt_func = kwargs['lt_func']
+    else:
+        lt_func = default_lt_func
+    if('mode' in kwargs):
+        mode = kwargs['mode']
+    else:
+        mode = 'kv'
+    k1,v1 = t1
+    k2,v2 = t2
+    if(mode == 'key'):
+        if(eq_func(k1,k2)):
+            return(0)
+        elif(gt_func(k1,k2)):
+            return(1)
+        else:
+            return(-1)
+    elif(mode == 'value'):
+        if(eq_func(v1,v2)):
+            return(0)
+        elif(gt_func(v1,v2)):
+            return(1)
+        else:
+            return(-1)
+    elif(mode == 'vk'):
+        if(eq_func(v1,v2)):
+            if(eq_func(k1,k2)):
+                return(0)
+            elif(gt_func(k1,k2)):
+                return(1)
+            else:
+                return(-1)
+        elif(gt_func(v1,v2)):
+            return(1)
+        else:
+            return(-1)
+    else:
+        if(eq_func(k1,k2)):
+            if(eq_func(v1,v2)):
+                return(0)
+            elif(gt_func(v1,v2)):
+                return(1)
+            else:
+                return(-1)
+        elif(gt_func(k1,k2)):
+            return(1)
+        else:
+            return(-1)
+
 
 #################
 
